@@ -1,15 +1,26 @@
 import React from "react";
+import Button from "@mui/material/Button";
 
 type Props = {};
 
 const Card = () => {
   return (
-    <div className="flex min-h-[50vh] w-full flex-col gap-2 ">
-      <img
-        src="./homeImgs/women-9.jpg"
-        alt=""
-        className="h-[80%] w-full rounded-xl bg-cover bg-center"
-      />
+    <div className="flex min-h-[50vh] w-full flex-col gap-2">
+      <div className="relative h-[80%] w-full rounded-xl bg-cover bg-center">
+        <img src="./homeImgs/women-9.jpg" alt="" className="h-full w-full" />
+        <Button
+          sx={{
+            background: "red",
+            display: "absolute",
+            bottom: "50px",
+            width: "100%",
+            marginLeft: "10px",
+            marginRight: "10px",
+          }}
+        >
+          Add To Cart
+        </Button>
+      </div>
 
       <div className="flex flex-col gap-2">
         <h3>Reamie shirt with pockets</h3>
