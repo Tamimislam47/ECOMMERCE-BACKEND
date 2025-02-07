@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React from "react";
 
 // type Props = {
@@ -24,6 +25,8 @@
 
 import * as React from "react";
 
+=======
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
 import { Card, CardContent } from "../components/ui/card.tsx";
 import {
   Carousel,
@@ -32,7 +35,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+<<<<<<< HEAD
 import { title } from "process";
+=======
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
 
 const CategoriesObj = [
   {
@@ -42,6 +48,7 @@ const CategoriesObj = [
     count: "12items",
   },
   {
+<<<<<<< HEAD
     id: 1,
     img: "./homeImgs/cls-circle3.jpg",
     title: "New In",
@@ -64,11 +71,36 @@ const CategoriesObj = [
     img: "./homeImgs/cls-circle3.jpg",
     title: "New In",
     count: "12items",
+=======
+    id: 2,
+    img: "./homeImgs/cls-circle3.jpg",
+    title: "Best Seller",
+    count: "20items",
+  },
+  {
+    id: 3,
+    img: "./homeImgs/cls-circle3.jpg",
+    title: "Trending",
+    count: "15items",
+  },
+  {
+    id: 4,
+    img: "./homeImgs/cls-circle3.jpg",
+    title: "On Sale",
+    count: "8items",
+  },
+  {
+    id: 5,
+    img: "./homeImgs/cls-circle3.jpg",
+    title: "Featured",
+    count: "5items",
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
   },
 ];
 
 export default function Categories() {
   return (
+<<<<<<< HEAD
     <div className="w-[70vw] mx-auto space-y-8">
       {/* Title Section */}
       <div className="text-center space-y-2 flex  justify-between">
@@ -76,11 +108,21 @@ export default function Categories() {
           Categories You Might Like
         </h1>
         <p className="underline text-black font-bold cursor-pointer">
+=======
+    <div className="mx-auto w-[80%] space-y-8 bg-red-400">
+      {/* Title Section */}
+      <div className="flex justify-between space-y-2 text-center">
+        <h1 className="text-3xl font-bold text-black">
+          Categories You Might Like
+        </h1>
+        <p className="cursor-pointer font-bold text-black underline">
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
           View All Collection
         </p>
       </div>
 
       {/* Carousel Section */}
+<<<<<<< HEAD
       <Carousel className="max-w-full overflow-hidden">
         <CarouselContent className="flex space-x-4">
           {CategoriesObj.map((category, index) => (
@@ -107,6 +149,9 @@ export default function Categories() {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+=======
+      div
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
     </div>
   );
 }

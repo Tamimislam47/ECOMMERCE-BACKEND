@@ -5,17 +5,34 @@ type Props = {};
 
 const Card = () => {
   return (
+<<<<<<< HEAD
     <div className="flex min-h-[50vh] w-full flex-col gap-2">
       <div className="relative h-[80%] w-full rounded-xl bg-cover bg-center">
         <img src="./homeImgs/women-9.jpg" alt="" className="h-full w-full" />
+=======
+    <div className="flex h-full w-full flex-col gap-2">
+      <div className="relative flex h-[80%] w-full flex-col rounded-xl bg-green-300 bg-cover bg-center">
+        <div className="absolute inset-0">
+          <img
+            src="./homeImgs/women-9.jpg"
+            alt=""
+            className="h-full w-full rounded-xl object-cover"
+          />
+        </div>
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
         <Button
           sx={{
             background: "red",
             display: "absolute",
             bottom: "50px",
+<<<<<<< HEAD
             width: "100%",
             marginLeft: "10px",
             marginRight: "10px",
+=======
+            width: "90%",
+            margin: "auto",
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
           }}
         >
           Add To Cart
@@ -37,6 +54,7 @@ const Card = () => {
 
 export default function Products({}: Props) {
   return (
+<<<<<<< HEAD
     <div className="w-[70%] space-y-8">
       {/* Navigation */}
       <nav className="flex justify-center gap-4">
@@ -60,6 +78,14 @@ export default function Products({}: Props) {
         <Card />
         <Card />
       </div>
+=======
+    <div className="w-[80%] bg-yellow-300 h-2
+      {/* Navigation */}
+     
+
+      {/* Products Rows */}
+     
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
     </div>
   );
 }

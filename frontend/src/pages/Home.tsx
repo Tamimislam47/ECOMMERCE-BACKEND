@@ -5,12 +5,12 @@ import Products from "@/reuseablecoms/Products";
 
 export default function Home() {
   return (
-    <div className="w-screen text-black flex flex-col items-center justify-center  bg-white ">
+    <div className="flex w-screen flex-col items-center justify-center bg-white text-black">
       <Navbar />
       <Banner img="./homeImgs/slider-women1.jpg" />
-      <div className="flex flex-col items-center  justify-center text-black  gap-10 ">
+      <div className="flex w-full flex-col mt-5  items-center justify-center bg-green-300">
         <Categories />
-        <Products />
+      <Products />
       </div>
     </div>
   );

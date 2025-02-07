@@ -12,8 +12,13 @@ const isLogined = true;
 
 export default function Navbar({}: Props) {
   return (
+<<<<<<< HEAD
     <div className="navbar flex h-[100px] justify-center lg:w-[70%]">
       <div className="navbar-start">
+=======
+    <div className="navbar flex h-[100px] w-full justify-center bg-red-400">
+      <div className="navbar-start bg-green-300">
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -65,7 +70,11 @@ export default function Navbar({}: Props) {
         <img src="/homeImgs/logo.svg" alt="" />
       </a>
 
+<<<<<<< HEAD
       <div className="navbar-center hidden text-black lg:block">
+=======
+      <div className="navbar-center hidden text-black lg:block bg-yell">
+>>>>>>> b22484c (Initial commit for backend and frontend setup)
         <ul className="menu menu-horizontal px-1 text-[17px]">
           <li>
             <Link to={"/"}>Home</Link>
