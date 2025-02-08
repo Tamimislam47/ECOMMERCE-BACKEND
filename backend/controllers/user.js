@@ -4,6 +4,7 @@ const authToken = require("./authToken.js");
 const { v4: uuidv4 } = require("uuid");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
+const sendByMail = require("./Mail.js");
 
 const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -35,6 +36,8 @@ const user = {
     const query =
       "insert into UserDetails (userId,email,password) values (?,?,?) ";
     const values = [uuidv4(), email, hashPass];
+
+    await sendByMail();
 
     db.query(query, values, (err, _) => {
       if (err) return res.status(500).json({ error: err.message });
@@ -69,6 +72,8 @@ const user = {
 
     const refreshToken = await authToken.generateRefreshToken(user);
     const accessToken = await authToken.generateJwtToken(user);
+
+    
 
     // Set cookies and send the login response
     res

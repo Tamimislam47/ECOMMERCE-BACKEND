@@ -1,12 +1,16 @@
 const middleware = require("./middlewares/authenticateToken.js");
 const { upload } = require("./middlewares/multer.js");
-const ProductsController = require("./controllers/Products.js");
+const ProductsControllers = require("./controllers/Products.js");
 const { user } = require("./controllers/user.js");
 const express = require("express");
 const router = express.Router();
-const { productValidator } = require("./validators/expressValidator.js");
+const {
+  productValidator,
+  registerValidator,
+} = require("./validators/expressValidator.js");
+const sendByMail = require("./controllers/Mail.js");
 
-router.post("/signup", user.signup);
+router.post("/signup", registerValidator, user.signup);
 router.post("/signin", user.signin);
 router.post("/signout", middleware.authenticateToken, user.signout);
 router.post("/passwordchange", user.passwordChange);
@@ -22,12 +26,13 @@ router.post(
 router.post("/refreshTokenGen", middleware.newRefreshAccessToken);
 
 //Products APiI
-router.get("/products/all", ProductsController.getProducts);
+router.get("/products/all", ProductsControllers.getProducts);
 router.post(
   "/products/insert",
   productValidator,
-  ProductsController.insertProducts
+  ProductsControllers.insertProducts
 );
-router.delete("/products/delete", ProductsController.deleteProduct);
+router.delete("/products/delete", ProductsControllers.deleteProduct);
+// router.post("/products/update", ProductsControllers.updateProduct);
 
 module.exports = router;

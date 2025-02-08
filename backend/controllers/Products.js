@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 
 //TODO: update feature up coming
 
-const ProductsController = {
+const ProductsControllers = {
   getProducts: async (req, res) => {
     const query = "Select * from Products";
     db.query(query, (err, result) => {
@@ -16,7 +16,7 @@ const ProductsController = {
       });
     });
   },
-  
+
   insertProducts: async (req, res) => {
     try {
       const productId = uuidv4(); // Generate UUID
@@ -62,6 +62,7 @@ const ProductsController = {
 
   deleteProduct: async (req, res) => {
     const { productId } = req.body;
+    console.log(productId);
 
     const sql = "DELETE FROM Products WHERE productId = ?";
     db.query(sql, productId, (err, result) => {
@@ -74,6 +75,22 @@ const ProductsController = {
       res.status(200).json({ message: "Product deleted successfully!" });
     });
   },
+
+  //! UPDATE PRODUCT FUTERE FEATURE . THIS FUNCION EXPECT USER SELECTED UPDATEFIELDS FROM FRONTEND
+  // updateProduct: async (req, res) => {
+  //   const { productId } = req.body;
+
+  //   const sql = "UPDATE Products SET ? WHERE productId = ?";
+  //   db.query(sql, productId, (err, result) => {
+  //     if (err) {
+  //       console.error("Database Delete Error:", err);
+  //       return res
+  //         .status(500)
+  //         .json({ error: "Database error", details: err.message });
+  //     }
+  //     res.status(200).json({ message: "Product deleted successfully!" });
+  //   });
+  // },
 };
 
-module.exports = ProductsController;
+module.exports = ProductsControllers;
