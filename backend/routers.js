@@ -26,7 +26,11 @@ router.post(
 router.post("/refreshTokenGen", middleware.newRefreshAccessToken);
 
 //Products APiI
-router.get("/products/all", ProductsControllers.getProducts);
+router.get(
+  "/products/all",
+  middleware.authenticateToken,
+  ProductsControllers.getProducts
+);
 router.post(
   "/products/insert",
   productValidator,

@@ -1,10 +1,11 @@
-import React from "react";
 import Home from "./pages/Home";
 
-type Props = {};
-
-export default function App({}: Props) {
+const App: React.FC = () => {
   return (
+    <div className="flex w-screen min-h-screen  flex-col overflow-hidden bg-white">
       <Home />
+    </div>
   );
-}
+};
+
+export default App;

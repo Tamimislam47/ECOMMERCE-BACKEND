@@ -51,7 +51,17 @@ export default {
           5: "hsl(var(--chart-5))",
         },
       },
+      keyframes: {
+        slideIn: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+      },
+      animation: {
+        slideIn: "slideIn 0.3s ease forwards",
+      },
     },
   },
+
   plugins: [require("daisyui")],
 };

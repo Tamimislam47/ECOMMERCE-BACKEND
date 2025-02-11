@@ -1,4 +1,3 @@
-import { RiMenu2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
@@ -6,19 +5,13 @@ import { FaRegHeart } from "react-icons/fa";
 import { IoBagOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 
-type Props = {};
 
 const isLogined = true;
 
-export default function Navbar({}: Props) {
+export default function Navbar() {
   return (
-<<<<<<< HEAD
-    <div className="navbar flex h-[100px] justify-center lg:w-[70%]">
-      <div className="navbar-start">
-=======
-    <div className="navbar flex h-[100px] w-full justify-center bg-red-400">
-      <div className="navbar-start bg-green-300">
->>>>>>> b22484c (Initial commit for backend and frontend setup)
+    <div className="navbar flex h-[100px] w-full justify-center ">
+      <div className="navbar-start ">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -70,11 +63,7 @@ export default function Navbar({}: Props) {
         <img src="/homeImgs/logo.svg" alt="" />
       </a>
 
-<<<<<<< HEAD
-      <div className="navbar-center hidden text-black lg:block">
-=======
       <div className="navbar-center hidden text-black lg:block bg-yell">
->>>>>>> b22484c (Initial commit for backend and frontend setup)
         <ul className="menu menu-horizontal px-1 text-[17px]">
           <li>
             <Link to={"/"}>Home</Link>

@@ -29,7 +29,7 @@ export default function Banner({ img, height }: BannerType) {
   return (
     <div
       ref={bannerRef}
-      className={`w-screen bg-cover bg-center lg:h-screen`}
+      className={`w-[99vw] tamim bg-cover bg-center lg:h-screen`}
       style={{
         backgroundImage: `url(${img})`,
         height: height,

@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "./src/pages/Home";
-import Shop from "@/pages/Shop";
 import Pages from "@/pages/Pages";
 import Products from "@/reuseablecoms/Products";
 import BuyTheme from "@/pages/BuyTheme";
 import Blog from "@/pages/Blog";
-import { LogIn } from "lucide-react";
 import Login from "@/pages/Login";
 import Register from "@/reuseablecoms/Register";
+import AllProducts from "@/pages/AllProducts";
+import SingleBlog from "@/pages/SingleBlog";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -36,5 +37,13 @@ export const router = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/allproducts",
+    element: <AllProducts />,
+  },
+  {
+    path: "/singleblog",
+    element: <SingleBlog />,
   },
 ]);
