@@ -1,44 +1,44 @@
-const mysql = require("mysql2");
+const { Pool } = require("pg");
 
-const db = mysql.createConnection({
-  host: `${process.env.DB_HOST}`,
-  user: `${process.env.DB_USER}`,
-  password: `${process.env.DB_PASS}`,
-  database: `${process.env.DB_NAME}`,
+// Create a new pool instance for connecting to PostgreSQL
+const db = new Pool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT, // Make sure to set the port, typically 5432 for PostgreSQL
 });
 
-db.connect(function (err) {
+// Check if the connection is working
+db.connect((err, client, release) => {
   if (err) {
-    console.error("error connecting: " + err.stack);
+    console.error("Error connecting to PostgreSQL:", err.stack);
     return;
   }
-
-  console.log("connected with database... ");
+  console.log("Connected to PostgreSQL...");
+  release();
 });
 
+// Function to find a user by email
 const findByEmail = async (email) => {
-  const query = "SELECT * FROM UserDetails WHERE email = ?";
-  return new Promise((resolve, reject) => {
-    db.query(query, [email], (err, res) => {
-      if (err) {
-        reject("User not found"); // Rejecting the promise with an error message
-        return; // Exit early on error
-      }
-      resolve(res[0]); // Resolving with the first result
-    });
-  });
+  const query = "SELECT * FROM UserDetails WHERE email = $1"; // Use $1 for parameterized queries
+  try {
+    const res = await db.query(query, [email]);
+    return res.rows[0]; // Return the first resultcd
+  } catch (error) {
+    throw new Error("User not found");
+  }
 };
 
+// Function to update the password by email
 const updatePasswordByEmail = async (hashedPassword, email) => {
-  const query = `UPDATE UserDetails SET password = ? WHERE email = ?`;
-  return new Promise((resolve, reject) => {
-    db.query(query, [hashedPassword, email], (err, result) => {
-      if (err) {
-        reject("Something went wrong while updating the password");
-      }
-      resolve(result);
-    });
-  });
+  const query = "UPDATE UserDetails SET password = $1 WHERE email = $2";
+  try {
+    const result = await db.query(query, [hashedPassword, email]);
+    return result;
+  } catch (error) {
+    throw new Error("Something went wrong while updating the password");
+  }
 };
 
 module.exports = { db, findByEmail, updatePasswordByEmail };

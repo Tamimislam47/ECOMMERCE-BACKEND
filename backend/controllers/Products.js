@@ -5,16 +5,20 @@ const { v4: uuidv4 } = require("uuid");
 
 const ProductsControllers = {
   getProducts: async (req, res) => {
-    const query = "Select * from Products";
-    db.query(query, (err, result) => {
-      if (err) {
-        console.log(err);
-      }
+    const query = "SELECT * FROM Products";
+
+    try {
+      // Using promise-based query for PostgreSQL
+      const result = await db.query(query);
+
       res.status(200).json({
         status: "success",
-        data: result,
+        data: result.rows, // PostgreSQL returns rows in 'rows' field
       });
-    });
+    } catch (err) {
+      console.error("Error fetching products:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
   },
 
   insertProducts: async (req, res) => {
@@ -23,9 +27,9 @@ const ProductsControllers = {
       const imagesJson = JSON.stringify(req.body.images); // Assuming images are in req.body.images
 
       const sql = `
-        INSERT INTO Products (productId, price, images, description, quantity, size, sku, vendor, categories, subCategories, onSale)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
+      INSERT INTO Products (productId, price, images, description, quantity, size, sku, vendor, categories, subCategories, onSale)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+    `;
 
       const values = [
         productId,
@@ -41,18 +45,12 @@ const ProductsControllers = {
         req.body.onSale,
       ];
 
-      db.query(sql, values, (err, result) => {
-        if (err) {
-          console.error("Database Insert Error:", err);
-          return res
-            .status(500)
-            .json({ error: "Database error", details: err.message });
-        }
+      // Using async/await with PostgreSQL
+      const result = await db.query(sql, values);
 
-        res.status(201).json({
-          message: "Product added successfully!",
-          productId: productId,
-        });
+      res.status(201).json({
+        message: "Product added successfully!",
+        productId: productId,
       });
     } catch (error) {
       console.error("Unexpected Error:", error);
@@ -62,18 +60,20 @@ const ProductsControllers = {
 
   deleteProduct: async (req, res) => {
     const { productId } = req.body;
-    console.log(productId);
 
-    const sql = "DELETE FROM Products WHERE productId = ?";
-    db.query(sql, productId, (err, result) => {
-      if (err) {
-        console.error("Database Delete Error:", err);
-        return res
-          .status(500)
-          .json({ error: "Database error", details: err.message });
+    const sql = "DELETE FROM Products WHERE productId = $1"; // Use $1 for parameterized queries
+    try {
+      const result = await db.query(sql, [productId]); // Pass the productId as an array
+      if (result.rowCount === 0) {
+        return res.status(404).json({ message: "Product not found" });
       }
       res.status(200).json({ message: "Product deleted successfully!" });
-    });
+    } catch (err) {
+      console.error("Database Delete Error:", err);
+      return res
+        .status(500)
+        .json({ error: "Database error", details: err.message });
+    }
   },
 
   //! UPDATE PRODUCT FUTERE FEATURE . THIS FUNCION EXPECT USER SELECTED UPDATEFIELDS FROM FRONTEND

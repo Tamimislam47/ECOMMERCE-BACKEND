@@ -10,7 +10,7 @@ const emailValidator = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const options = {
   httpOnly: true,
-  secure: true, // Secure in production
+  secure: true,
   sameSite: "Strict",
 };
 
@@ -18,83 +18,111 @@ const user = {
   signup: async (req, res) => {
     const { email, password } = req.body;
 
+    // Validate email
     if (!email || !emailValidator.test(email)) {
       return res.status(400).json({ error: "Invalid email format" });
     }
 
+    // Validate password
     if (!password || password.length < 8) {
       return res
         .status(400)
-        .json({ error: "password must be at least 6 characters long" });
+        .json({ error: "Password must be at least 8 characters long" });
     }
 
-    const hashPass = await bcrypt.hash(
-      password,
-      parseInt(process.env.SALTROUND)
-    );
+    try {
+      // Hash the password
+      const hashPass = await bcrypt.hash(
+        password,
+        parseInt(process.env.SALTROUND)
+      );
 
-    const query =
-      "insert into UserDetails (userId,email,password) values (?,?,?) ";
-    const values = [uuidv4(), email, hashPass];
+      // Insert user into PostgreSQL
+      const query = `
+      INSERT INTO UserDetails (userId, email, password)
+      VALUES ($1, $2, $3)
+    `;
+      const values = [uuidv4(), email, hashPass];
 
-    await sendByMail();
+      // Send confirmation email
+      await sendByMail();
 
-    db.query(query, values, (err, _) => {
-      if (err) return res.status(500).json({ error: err.message });
+      // Execute the query
+      await db.query(query, values);
 
       return res.status(201).json({ message: "Record inserted successfully" });
-    });
+    } catch (err) {
+      console.error("Error inserting record:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   },
 
   signin: async (req, res) => {
     const { email, password: pass } = req.body;
 
+    // Validate email
     if (!email || !emailValidator.test(email)) {
       return res.status(400).json({ error: "Invalid email format" });
     }
 
+    // Validate password
     if (!pass || pass.length < 8) {
       return res
         .status(400)
-        .json({ error: "password must be at least 6 characters long" });
+        .json({ error: "Password must be at least 8 characters long" });
     }
 
-    const user = await findByEmail(email);
+    try {
+      // Find user by email
+      const user = await findByEmail(email);
 
-    if (!user) {
-      return res.status(400).json({ message: "User not found" });
-    }
-
-    const matchWithHash = await bcrypt.compare(pass, user.password);
-    if (!matchWithHash) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    const refreshToken = await authToken.generateRefreshToken(user);
-    const accessToken = await authToken.generateJwtToken(user);
-
-    
-
-    // Set cookies and send the login response
-    res
-      .cookie("accessToken", accessToken, options)
-      .cookie("refreshToken", refreshToken, options)
-      .status(200)
-      .json({
-        message: "Login Successful",
-        accessToken,
-        refreshToken,
-      });
-
-    // Insert the refresh token into the database asynchronously after response
-    const query = "UPDATE UserDetails SET refreshToken = ? WHERE email = ?";
-    db.query(query, [refreshToken, email], (err, result) => {
-      if (err) {
-        console.error("Error updating refresh token:", err);
-      } else {
-        console.log("Refresh token updated:", result);
+      if (!user) {
+        return res.status(400).json({ message: "User not found" });
       }
-    });
+
+      // Compare the provided password with the hashed password in the database
+      const matchWithHash = await bcrypt.compare(pass, user.password);
+      if (!matchWithHash) {
+        return res.status(400).json({ message: "Invalid credentials" });
+      }
+
+      // Generate JWT and refresh tokens
+      const refreshToken = await authToken.generateRefreshToken(user);
+      const accessToken = await authToken.generateJwtToken(user);
+
+      // Set cookies and send the login response
+      const options = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Set secure flag in production
+        sameSite: "Strict",
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+      };
+
+      res
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .status(200)
+        .json({
+          message: "Login Successful",
+          accessToken,
+          refreshToken,
+        });
+
+      // Update the refresh token in the database asynchronously
+      const query = `
+      UPDATE UserDetails 
+      SET refreshToken = $1 
+      WHERE email = $2
+    `;
+      const values = [refreshToken, email];
+
+      db.query(query, values)
+        .then(() => console.log("Refresh token updated successfully"))
+        .catch((err) => console.error("Error updating refresh token:", err));
+    } catch (err) {
+      console.error("Error during signin:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
   },
 
   signout: async (_, res) => {
@@ -150,7 +178,6 @@ const user = {
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
-      console.log(hashedPassword);
 
       const updated = await updatePasswordByEmail(
         hashedPassword,

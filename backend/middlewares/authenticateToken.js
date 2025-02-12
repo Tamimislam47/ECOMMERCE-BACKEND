@@ -6,30 +6,42 @@ const { options } = require("../controllers/user.js");
 const middleware = {
   authenticateToken: async (req, res, next) => {
     try {
+      // Retrieve token from cookies or authorization header
       const token =
         req.cookies?.accessToken ||
-        req.headers["authorization"]?.replace("Bearer", " ").trim();
+        req.headers["authorization"]?.replace("Bearer", "").trim();
 
+      // If no token, return 401 response
       if (!token) {
         return res.status(401).json({ message: "Access Denied" });
       }
 
-      const user = jwt.verify(token, process.env.SECRETKEYJWT);
-      if (!user) {
+      // Verify JWT token and extract user data
+      const user = await jwt.verify(token, process.env.SECRETKEYJWT);
+
+      // Look for user by email
+      const validUser = await findByEmail(user.email);
+
+      // If user not found, return 401 response
+      if (!validUser) {
         return res.status(401).json({ message: "Access Denied" });
       }
 
-      const validUser = await findByEmail(user.email);
-
+      // Attach the user data to the request object
       res.user = validUser;
       req.access = true;
+
+      // Proceed to the next middleware
+      next();
     } catch (error) {
-      return res.status(401).json({ message: "Invalid User" });
+      // Return error response if verification fails
+      console.error(error);
+      return res
+        .status(401)
+        .json({ message: "Invalid User", error: error.message });
     }
-
-    next();
   },
-
+  
   authorizeUser: (role) => {
     return (req, res, next) => {
       if (res.user.role != role) {
