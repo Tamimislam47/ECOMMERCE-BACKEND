@@ -6,6 +6,8 @@ import TwoGridProduct from "@/reuseablecoms/TwoGridProduct";
 import SmallBanner from "@/reuseablecoms/SmallBanner";
 import NewsInsight from "@/reuseablecoms/NewsInsight";
 import Footer from "@/reuseablecoms/Footer";
+import ShopInstagram from "@/reuseablecoms/ShopInstagram";
+import SwiperWrapper from "@/reuseablecoms/SwiperWrapper";
 // import CustomerView from "@/reuseablecoms/CustomerView";
 
 export default function Home() {
@@ -17,11 +19,13 @@ export default function Home() {
         <Categories />
         <Products />
         <TwoGridProduct />
-        <div className="mt-12 flex w-screen items-center justify-center bg-[#F7F7F7]">
+        <div className="mt-12 flex w-screen flex-col items-center justify-center bg-[#F7F7F7]">
           <SmallBanner targetDate={"2025-02-20T00:00:00"} />
         </div>
         {/* <CustomerView /> */}
         <NewsInsight />
+        <ShopInstagram />
+        <SwiperWrapper />
         <Footer />
       </div>
     </div>

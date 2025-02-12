@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { LuArrowUpRight } from "react-icons/lu";
 import gsap from "gsap";
 
+
 type BannerType = {
   img: string;
   height?: string;
@@ -11,25 +12,29 @@ export default function Banner({ img, height }: BannerType) {
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (bannerRef.current) {
-      gsap.fromTo(
-        bannerRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1.5 },
-      );
+    const timeout = window.setInterval(() => {
+      if (bannerRef.current) {
+        gsap.fromTo(
+          bannerRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1.5 },
+        );
 
-      gsap.fromTo(
-        ".textAnimation",
-        { y: 250, opacity: 0 },
-        { y: 0, duration: 1.5, stagger: 0.5, opacity: 1 },
-      );
-    }
-  }, []);
+        gsap.fromTo(
+          ".textAnimation",
+          { y: 250, opacity: 0 },
+          { y: 0, duration: 1.5, stagger: 0.5, opacity: 1 },
+        );
+      }
+    }, 10000);
+
+    return () => clearInterval(timeout);
+  }, [bannerRef]);
 
   return (
     <div
       ref={bannerRef}
-      className={`w-[99vw] tamim bg-cover bg-center lg:h-screen`}
+      className={`tamim w-[99vw] bg-cover bg-center lg:h-screen`}
       style={{
         backgroundImage: `url(${img})`,
         height: height,
@@ -46,7 +51,7 @@ export default function Banner({ img, height }: BannerType) {
             </p>
           </li>
 
-          <button className="btn-rounded textAnimation btn border-white bg-white pl-6 pr-6 text-black">
+          <button className="btn-rounded textAnimation btn border-white bg-white pl-6 pr-6 text-black hover:text-white">
             <span className="textAnimation">Explore Collection</span>
             <span>
               <LuArrowUpRight />

@@ -30,7 +30,7 @@ const Card: React.FC = () => {
 export default function Products() {
   return (
     <>
-      <div className="grid min-h-[120vh] grid-rows-1 gap-4 sm:w-full sm:grid-rows-2 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
+      <div  className="grid min-h-[120vh] grid-rows-1 gap-4 sm:w-full sm:grid-rows-2 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
         <>
           <Card />
           <Card />

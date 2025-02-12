@@ -5,13 +5,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { IoBagOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 
-
 const isLogined = true;
 
 export default function Navbar() {
   return (
-    <div className="navbar flex h-[100px] w-full justify-center ">
-      <div className="navbar-start ">
+    <div id="navbar" className="navbar flex h-[100px] w-full justify-center">
+      <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -63,7 +62,7 @@ export default function Navbar() {
         <img src="/homeImgs/logo.svg" alt="" />
       </a>
 
-      <div className="navbar-center hidden text-black lg:block bg-yell">
+      <div className="bg-yell navbar-center hidden text-black lg:block">
         <ul className="menu menu-horizontal px-1 text-[17px]">
           <li>
             <Link to={"/"}>Home</Link>

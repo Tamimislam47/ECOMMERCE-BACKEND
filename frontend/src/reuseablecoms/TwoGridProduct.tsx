@@ -1,20 +1,46 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Grid from "@mui/material/Grid2";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Underline } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 type Props = {};
 
 export default function TwoGridProduct({}: Props) {
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (boxRef.current) {
+      gsap.fromTo(
+        ".text",
+        { y: 50, opacity: 0 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          scrollTrigger: {
+            trigger: boxRef.current,
+            start: "top 80%",
+            end: "bottom top",
+          },
+        },
+      );
+    }
+  }, []);
+
   return (
     <Box
+      ref={boxRef}
       sx={{
         width: {
           xs: "100%",
           sm: "100%",
           md: "80%",
         },
-
         height: "68vh",
       }}
     >
@@ -37,12 +63,12 @@ export default function TwoGridProduct({}: Props) {
           <Box
             sx={{
               height: "85%",
-              backgroundImage: "url(./homeImgs/banner-cls1.jpg )",
+              backgroundImage: "url(./homeImgs/banner-cls1.jpg)",
               backgroundSize: "cover",
               backgroundPosition: "center",
               width: "100%",
             }}
-          ></Box>
+          />
           <Box
             sx={{
               height: "15%",
@@ -56,26 +82,24 @@ export default function TwoGridProduct({}: Props) {
           >
             <Typography
               variant="h4"
-              sx={{
-                fontWeight: "bold",
-              }}
+              className="text"
+              sx={{ fontWeight: "bold" }}
             >
               Crossbody bag
             </Typography>
-            <Typography>
+            <Typography className="text">
               From beach to party: Perfect styles for every occasion.
             </Typography>
-            <Typography>
+            <Typography className="text">
               <Link to={"/allproducts"}>Shop Now</Link>
             </Typography>
           </Box>
-          I
         </Grid>
         <Grid
           size={6}
           sx={{
             background: "red",
-            backgroundImage: "url(./homeImgs/banner-cls2.jpg )",
+            backgroundImage: "url(./homeImgs/banner-cls2.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "100%",
@@ -94,13 +118,16 @@ export default function TwoGridProduct({}: Props) {
               color: "white",
             }}
           >
-            <Typography variant="h4">Capsule Collection</Typography>
-            <Typography variant="body1">
+            <Typography variant="h4" className="text">
+              Capsule Collection
+            </Typography>
+            <Typography variant="body1" className="text">
               Reserved for special occasions
             </Typography>
-
-            <Typography variant="body1">
-              <Link to={"/allproduct"}>Shop Now</Link>
+            <Typography variant="body1" className="text">
+              <Link to={"/allproduct"} style={{ textDecoration: "underline" }}>
+                Shop Now
+              </Link>
             </Typography>
           </Box>
         </Grid>
