@@ -39,7 +39,7 @@ const user = {
 
       // Insert user into PostgreSQL
       const query = `
-      INSERT INTO UserDetails (userId, email, password)
+      INSERT INTO UserDetails (userId, email, password,)
       VALUES ($1, $2, $3)
     `;
       const values = [uuidv4(), email, hashPass];

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { findByEmail, db, updateByEmail } = require("../db.js");
 const authToken = require("../controllers/authToken.js");
-const { options } = require("../controllers/user.js");
+const { options } = require("../controllers/UserControllers.js");
 
 const middleware = {
   authenticateToken: async (req, res, next) => {
@@ -41,12 +41,15 @@ const middleware = {
         .json({ message: "Invalid User", error: error.message });
     }
   },
-  
+
   authorizeUser: (role) => {
     return (req, res, next) => {
       if (res.user.role != role) {
-        return res.status(403).json({ message: "Forbidden" });
+        return res
+          .status(403)
+          .json({ message: "Not Allow To Access This Route" });
       }
+
       next();
     };
   },

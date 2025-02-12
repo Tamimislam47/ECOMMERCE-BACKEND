@@ -1,11 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const { v4: uuidv4 } = require("uuid");
+
+
+
 const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
-const router = require("./routers.js");
+const userRouter = require("./routers.js");
+const adminRouter = require("./AdminRouter.js");
 
 app.use(
   cors({
@@ -17,7 +22,8 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api", router);
+app.use("/api/", userRouter);
+app.use("/api/admin", adminRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on port ${process.env.PORT}`);

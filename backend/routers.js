@@ -1,12 +1,11 @@
 const middleware = require("./middlewares/authenticateToken.js");
 const { upload } = require("./middlewares/multer.js");
 const ProductsControllers = require("./controllers/Products.js");
-const { user } = require("./controllers/user.js");
+const { user } = require("./controllers/UserControllers.js");
 const express = require("express");
 const userComments = require("./controllers/UserComments.js");
 const router = express.Router();
 const {
-  productValidator,
   registerValidator,
 } = require("./validators/expressValidator.js");
 const sendByMail = require("./controllers/Mail.js");
@@ -52,14 +51,10 @@ router.post(
 
 router.post("/refreshTokenGen", middleware.newRefreshAccessToken);
 
+//TODO : Admin Router Start
 //Products APiI
 router.get("/products/all", ProductsControllers.getProducts);
-router.post(
-  "/products/insert",
-  productValidator,
-  ProductsControllers.insertProducts
-);
-router.delete("/products/delete", ProductsControllers.deleteProduct);
+
 // router.post("/products/update", ProductsControllers.updateProduct);
 
 module.exports = router;
