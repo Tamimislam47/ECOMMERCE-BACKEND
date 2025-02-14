@@ -7,8 +7,8 @@ const authToken = {
         email: user.email,
         id: user.userId,
       },
-      process.env.SECRETKEYJWT,
-      { expiresIn: process.env.JWTEXPIRE }
+      process.env.SECRETKEY_JWT,
+      { expiresIn: process.env.JWT_EXPIRE }
     );
   },
 

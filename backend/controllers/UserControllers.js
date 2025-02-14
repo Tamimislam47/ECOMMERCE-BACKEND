@@ -95,7 +95,7 @@ const user = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Set secure flag in production
         sameSite: "Strict",
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        maxAge: 86400000, // 1 day
       };
 
       res
@@ -150,7 +150,7 @@ const user = {
         }
 
         console.log("Uploading file:", file.path);
-        const result = await cloudinary.uploader.upload(file.path);
+        await cloudinary.uploader.upload(file.path);
       }
 
       res.status(200).json({
@@ -179,10 +179,7 @@ const user = {
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      const updated = await updatePasswordByEmail(
-        hashedPassword,
-        validUser.email
-      );
+      await updatePasswordByEmail(hashedPassword, validUser.email);
 
       res.status(200).json({ message: "Password updated successfully" });
     } catch (error) {

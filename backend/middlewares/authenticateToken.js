@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
-const { findByEmail, db, updateByEmail } = require("../db.js");
+const { findByEmail, db } = require("../db.js");
 const authToken = require("../controllers/authToken.js");
-const { options } = require("../controllers/UserControllers.js");
 
 const middleware = {
   authenticateToken: async (req, res, next) => {
@@ -31,10 +30,8 @@ const middleware = {
       res.user = validUser;
       req.access = true;
 
-      // Proceed to the next middleware
       next();
     } catch (error) {
-      // Return error response if verification fails
       console.error(error);
       return res
         .status(401)
@@ -54,47 +51,61 @@ const middleware = {
     };
   },
 
-  newRefreshAccessToken: async (req, res) => {
+  newRefreshAccessToken: async (req, res, next) => {
     const incomingrefreshToken = req.cookies?.refreshToken;
 
     if (!incomingrefreshToken) {
       return res.status(401).json({ message: "Access Denied" });
     }
 
-    const decode = jwt.verify(
-      incomingrefreshToken,
-      process.env.SECRETREFRESHTOKEN
-    );
+    try {
+      const decode = jwt.verify(
+        incomingrefreshToken,
+        process.env.SECRETREFRESHTOKEN
+      );
 
-    if (!decode) {
-      return res.status(401).json({ message: "Access dfsdfDenied" });
-    }
+      const queryText =
+        "SELECT email, refreshtoken FROM UserDetails WHERE email = $1";
+      const { rows } = await db.query(queryText, [decode.email]);
+      const user = rows[0];
 
-    const user = await findByEmail(decode.email);
+      if (!user || !user.refreshtoken || user.refreshtoken === "NULL") {
+        return res.status(401).json({ message: "Refresh Token Expired" });
+      }
 
-    if (!user.refreshToken || user.refreshToken === "NULL") {
-      return res.status(401).json({ message: "RefreshToken Expired" });
-    }
+      // Generate new access and refresh tokens
+      const auth = await authToken.generateJwtTokenAndRefreshToken(user);
+      console.log(auth);
 
-    const auth = await authToken.generateJwtTokenAndRefreshToken(user);
-    res
-      .cookie("newAccessToken", auth.newAccessToken, options)
-      .cookie("newRefreshToken", auth.newRefreshToken, options)
-      .status(200)
-      .json({
-        message: "Login Successful",
-        newAccessToken: auth.newAccessToken,
-        newRefreshToken: auth.newRefreshToken,
+      // Set new tokens as cookies
+      res.cookie("newAccessToken", auth.newAccessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 600000, // 10 minutes
       });
 
-    const query = "UPDATE UserDetails SET refreshToken = ? WHERE email = ?";
-    db.query(query, [auth.newRefreshToken, decode.email], (err, result) => {
-      if (err) {
-        console.error("Error updating refresh token:", err);
-      } else {
-        console.log("Refresh token updated:", result);
-      }
-    });
+      res.cookie("newRefreshToken", auth.newRefreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Strict",
+        maxAge: 86400000, // 1 day
+      });
+
+      // Update refresh token in the database
+      const updateQuery =
+        "UPDATE UserDetails SET refreshtoken = $1 WHERE email = $2";
+      await db.query(updateQuery, [auth.newRefreshToken, decode.email]);
+
+      console.log("Refresh token updated successfully");
+      next();
+    } catch (err) {
+      console.error("Error refreshing token:", err);
+      res.clearCookie("refreshToken");
+      return res
+        .status(401)
+        .json({ message: "Invalid or expired refresh token" });
+    }
   },
 };
 
