@@ -44,7 +44,7 @@ export default function SmallBanner({ targetDate }: Props) {
       </div>
 
       {/* Image Section */}
-      <div className="order-last h-full bg-center md:order-none md:col-span-1">
+      <div className="order-last  h-full bg-center md:order-none md:col-span-1">
         <img
           className="h-[35vh]"
           src="./homeImgs/img-countdown1.png"
@@ -56,7 +56,7 @@ export default function SmallBanner({ targetDate }: Props) {
       <div className="flex items-center justify-center gap-4 text-xl font-bold md:col-span-1">
         {timeLeft.days + timeLeft.hours + timeLeft.minutes + timeLeft.seconds >
         0 ? (
-          <div className="flex gap-10 text-6xl">
+          <div className="flex gap-5 text-6xl">
             <div className="flex flex-col gap-2">
               <p>{timeLeft.days}</p> <p className="text-sm">Days</p>
             </div>

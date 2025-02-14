@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { LuArrowUpRight } from "react-icons/lu";
 import gsap from "gsap";
-
+import { Link } from "react-router-dom";
 
 type BannerType = {
   img: string;
@@ -51,12 +51,15 @@ export default function Banner({ img, height }: BannerType) {
             </p>
           </li>
 
-          <button className="btn-rounded textAnimation btn border-white bg-white pl-6 pr-6 text-black hover:text-white">
-            <span className="textAnimation">Explore Collection</span>
-            <span>
-              <LuArrowUpRight />
+          <Link
+            to="/shop"
+            className="flex items-center rounded bg-white p-2 text-black hover:cursor-pointer hover:bg-black hover:text-white"
+            aria-label="Explore the collection"
+          >
+            <span className="textAnimation flex items-center gap-2">
+              Explore Collection <LuArrowUpRight />
             </span>
-          </button>
+          </Link>
         </ul>
       </div>
     </div>

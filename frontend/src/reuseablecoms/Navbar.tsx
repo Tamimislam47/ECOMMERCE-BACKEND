@@ -4,12 +4,13 @@ import { CgProfile } from "react-icons/cg";
 import { FaRegHeart } from "react-icons/fa";
 import { IoBagOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
+import SideNav from "./SideNav";
 
 const isLogined = true;
 
 export default function Navbar() {
   return (
-    <div id="navbar" className="navbar flex h-[100px] w-full justify-center">
+    <div id="navbar" className="navbar flex h-[100px] w-full justify-between">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -28,29 +29,8 @@ export default function Navbar() {
               />
             </svg>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
-          >
-            <li>
-              <Link to={"/"}>Home</Link>
-            </li>
-            <li>
-              <Link to={"/"}>Shop</Link>
-            </li>
-            <li>
-              <Link to={"/"}>Products</Link>
-            </li>
-            <li>
-              <Link to={"/"}>Blog</Link>
-            </li>
-            <li>
-              <Link to={"/"}>Pages</Link>
-            </li>
-            <li>
-              <Link to={"/"}>Buy Theme</Link>
-            </li>
-          </ul>
+
+          <SideNav />
         </div>
 
         <a className="btn btn-ghost hidden text-xl lg:block">
@@ -85,27 +65,36 @@ export default function Navbar() {
         </ul>
       </div>
       {isLogined ? (
-        <Button asChild className="border-2 border-black">
-          <Link to={"/login"}>Login</Link>
-        </Button>
-      ) : (
         <div className="navbar-end flex gap-5 text-2xl text-black">
-          <i>
+          <i className="hover:cursor-pointer">
             <IoSearch />
           </i>
 
-          <i>
+          <i className="hover:cursor-pointer">
             <CgProfile />
           </i>
 
-          <i>
-            <FaRegHeart />
+          <i className="relative hover:cursor-pointer">
+            <Link to={"/wishlist"}>
+              {" "}
+              <FaRegHeart />
+            </Link>
+            <div className="absolute right-[-5px] top-[-5px] z-10 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-red-500 text-[14px] text-white">
+              1
+            </div>
           </i>
 
-          <i>
+          <i className="relative hover:cursor-pointer">
             <IoBagOutline />
+            <div className="absolute right-[-5px] top-[-5px] z-10 flex h-[20px] w-[20px] items-center justify-center rounded-full bg-red-500 text-[14px] text-white">
+              1
+            </div>
           </i>
         </div>
+      ) : (
+        <Button asChild className="border-2 border-black">
+          <Link to={"/login"}>Login</Link>
+        </Button>
       )}
     </div>
   );

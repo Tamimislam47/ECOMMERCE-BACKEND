@@ -1,8 +1,14 @@
+import { Pagination } from "@mui/material";
 import { Button } from "../components/ui/button.tsx";
 import { Link } from "react-router-dom";
-const Card: React.FC = () => {
+
+type Props = {
+  pagination?: boolean;
+};
+
+export const Card: React.FC<Props> = () => {
   return (
-    <div className="flex h-full w-full flex-col gap-2">
+    <div className="flex flex-col gap-2 p-5">
       <div className="relative flex h-[80%] w-full flex-col items-center rounded-xl bg-cover bg-center">
         <img
           src="./homeImgs/women-9.jpg"
@@ -27,11 +33,11 @@ const Card: React.FC = () => {
   );
 };
 
-export default function Products() {
+export default function Products({ pagination }) {
   return (
     <>
-      <div  className="grid min-h-[120vh] grid-rows-1 gap-4 sm:w-full sm:grid-rows-2 md:grid-cols-2 lg:w-[80%] lg:grid-cols-4">
-        <>
+      <div className="flex flex-col items-center justify-center">
+        <div className="grid grid-rows-1 sm:w-full sm:grid-rows-2 md:grid-cols-2 lg:min-h-[120vh] lg:w-[80%] lg:grid-cols-4">
           <Card />
           <Card />
           <Card />
@@ -40,10 +46,18 @@ export default function Products() {
           <Card />
           <Card />
           <Card />
-        </>
-      </div>
+        </div>
 
-      <Link to={"/allproducts"} >View All Products</Link>
+        {pagination ? (
+          <div className="mb-4" >
+            <Pagination />
+          </div>
+        ) : (
+          <Link to={"/allproducts"} className="underline hover:text-red-400">
+            View All Products
+          </Link>
+        )}
+      </div>
     </>
   );
 }

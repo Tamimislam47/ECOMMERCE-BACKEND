@@ -30,7 +30,7 @@ const ReviewCard: React.FC<ReviewCardType> = ({
 
 const NewsInsight = (props: Props) => {
   return (
-    <div className="flex w-[80%] flex-col items-center justify-center gap-4 ">
+    <div className="flex lg:w-[80%] flex-col items-center justify-center gap-4 ">
       <h1 className="text-3xl font-semibold">News insight</h1>
       <p>Browse our Top Trending: the hottest picks loved by all.</p>
 

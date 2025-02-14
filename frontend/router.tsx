@@ -8,6 +8,8 @@ import Login from "@/pages/Login";
 import Register from "@/reuseablecoms/Register";
 import AllProducts from "@/pages/AllProducts";
 import SingleBlog from "@/pages/SingleBlog";
+import Wishlist from "@/pages/Wishlist";
+import Shop from "@/pages/Shop";
 
 export const router = createBrowserRouter([
   {
@@ -45,5 +47,13 @@ export const router = createBrowserRouter([
   {
     path: "/singleblog",
     element: <SingleBlog />,
+  },
+  {
+    path: "/wishlist",
+    element: <Wishlist />,
+  },
+  {
+    path: "/shop",
+    element: <Shop />,
   },
 ]);

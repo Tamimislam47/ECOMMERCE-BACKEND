@@ -48,9 +48,9 @@ const SwiperWrapper = (props: Props) => {
           className="flex flex-col items-center justify-center gap-3 p-3"
           key={icon.id}
         >
-          <i className="text-2xl" > {icon.IconComponent} </i>
-          <h1>{icon.title} </h1>
-          <p className="text-[14px]">{icon.description} </p>
+          <i className="text-2xl"> {icon.IconComponent} </i>
+          <h1 className="text-lg font-bold">{icon.title} </h1>
+          <p className="text-center text-[14px]">{icon.description} </p>
         </div>
       ))}
     </div>
