@@ -13,7 +13,7 @@ const Footer = (props: Props) => {
   return (
     <>
       <hr className="w-full border-gray-300" />
-      <footer className="footer flex justify-between p-10 text-black lg:w-[80%]">
+      <footer className="grid-col footer grid lg:p-10 text-black sm:grid-cols-2 sm:grid-rows-2 lg:w-[80%] lg:grid-cols-4 lg:grid-rows-1">
         <nav>
           <h6 className="footer-title">
             <a href="#navbar">

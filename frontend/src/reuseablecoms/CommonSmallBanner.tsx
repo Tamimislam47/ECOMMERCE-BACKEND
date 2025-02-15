@@ -5,7 +5,7 @@ type Props = {}
 function CommonSmallBanner({}: Props) {
   return (
     <div
-      className="h-[30vh] w-screen bg-cover"
+      className="h-[30vh] bg-cover"
       style={{
         backgroundImage: `url(${img})`,
       }}

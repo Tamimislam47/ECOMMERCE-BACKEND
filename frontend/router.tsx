@@ -10,6 +10,8 @@ import AllProducts from "@/pages/AllProducts";
 import SingleBlog from "@/pages/SingleBlog";
 import Wishlist from "@/pages/Wishlist";
 import Shop from "@/pages/Shop";
+import AboutUs from "@/pages/AboutUs";
+import StoreLocationPage from "@/pages/StoreLocationPage";
 
 export const router = createBrowserRouter([
   {
@@ -55,5 +57,13 @@ export const router = createBrowserRouter([
   {
     path: "/shop",
     element: <Shop />,
+  },
+  {
+    path: "/aboutus",
+    element: <AboutUs />,
+  },
+  {
+    path: "/storelist",
+    element: <StoreLocationPage />,
   },
 ]);

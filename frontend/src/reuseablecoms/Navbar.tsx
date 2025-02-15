@@ -43,7 +43,7 @@ export default function Navbar() {
       </a>
 
       <div className="bg-yell navbar-center hidden text-black lg:block">
-        <ul className="menu menu-horizontal px-1 text-[17px]">
+        <ul className="menu menu-horizontal flex items-center px-1 text-[17px]">
           <li>
             <Link to={"/"}>Home</Link>
           </li>
@@ -57,7 +57,35 @@ export default function Navbar() {
             <Link to={"/blog"}>Blog</Link>
           </li>
           <li>
-            <Link to={"/pages"}>Pages</Link>
+            <div className="dropdown dropdown-bottom">
+              <div
+                tabIndex={0}
+                role="button"
+                className="border-0 bg-transparent"
+              >
+                Click
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu dropdown-content z-[1] rounded-box bg-white shadow"
+              >
+                <li>
+                  <Link to={"/aboutus"}>About Us</Link>
+                </li>
+                <li>
+                  <Link to={"/storelist"}>Store List </Link>
+                </li>
+                <li>
+                  <a>Contact Us </a>
+                </li>
+                <li>
+                  <a>FAQs </a>
+                </li>
+                <li>
+                  <a>Customer Feedbacks </a>
+                </li>
+              </ul>
+            </div>
           </li>
           <li>
             <Link to={"/buytheme"}>Buy Theme</Link>
