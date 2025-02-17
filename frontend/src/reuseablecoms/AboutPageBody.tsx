@@ -5,8 +5,8 @@ type Props = {};
 const AboutPageBody = (props: Props) => {
   const [activeTab, setActiveTab] = useState("tab1");
   return (
-    <div className="place-content-centerl grid w-full lg:grid-cols-2">
-      <div className="overflow-x-hidden p-5 lg:p-10">
+    <div className="place-content-centerl grid w-full gap-5 p-5 lg:w-[80%] lg:grid-cols-2">
+      <div className="overflow-x-hidden">
         <img
           src="./homeImgs/about-us.jpeg"
           alt="About Us"
@@ -37,7 +37,7 @@ const AboutPageBody = (props: Props) => {
               ))}
             </nav>
           </div>
-          <div className="mt-6  ">
+          <div className="mt-6">
             {tabs.map((tab) => (
               <div
                 key={tab.id}

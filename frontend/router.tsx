@@ -12,6 +12,7 @@ import Wishlist from "@/pages/Wishlist";
 import Shop from "@/pages/Shop";
 import AboutUs from "@/pages/AboutUs";
 import StoreLocationPage from "@/pages/StoreLocationPage";
+import Faqs from "@/pages/Faqs";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,27 @@ export const router = createBrowserRouter([
   {
     path: "/aboutus",
     element: <AboutUs />,
+  },
+  {
+    path: "/storelist",
+    element: <StoreLocationPage />,
+  },
+
+  {
+    path: "/feedbacks",
+    element: <StoreLocationPage />,
+  },
+  {
+    path: "/faqs",
+    element: <Faqs />,
+  },
+  {
+    path: "/contactus",
+    element: <StoreLocationPage />,
+  },
+  {
+    path: "/storelist",
+    element: <StoreLocationPage />,
   },
   {
     path: "/storelist",

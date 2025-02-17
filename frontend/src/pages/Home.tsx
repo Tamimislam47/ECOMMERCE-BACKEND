@@ -8,9 +8,9 @@ import NewsInsight from "@/reuseablecoms/NewsInsight";
 import Footer from "@/reuseablecoms/Footer";
 import ShopInstagram from "@/reuseablecoms/ShopInstagram";
 import SwiperWrapper from "@/reuseablecoms/SwiperWrapper";
-// import CustomerView from "@/reuseablecoms/CustomerView";
 
 export default function Home() {
+  
   return (
     <div className="w-full bg-white">
       <Navbar />
