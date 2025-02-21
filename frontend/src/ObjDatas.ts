@@ -1,4 +1,8 @@
+
+
 export const tabs = [
+
+
   {
     id: "tab1",
     label: "Introduction",
@@ -142,3 +146,4 @@ export const navigationLinks = [
   },
   { name: "Buy Theme", path: "/buytheme" },
 ];
+

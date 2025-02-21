@@ -13,6 +13,7 @@ import Shop from "@/pages/Shop";
 import AboutUs from "@/pages/AboutUs";
 import StoreLocationPage from "@/pages/StoreLocationPage";
 import Faqs from "@/pages/Faqs";
+import SingelProduct from "@/pages/SingelProduct";
 
 export const router = createBrowserRouter([
   {
@@ -87,5 +88,9 @@ export const router = createBrowserRouter([
   {
     path: "/storelist",
     element: <StoreLocationPage />,
+  },
+  {
+    path: "/singleitem/:id",
+    element: <SingelProduct />,
   },
 ]);

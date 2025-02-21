@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 type Props = {
   pagination?: boolean;
 };
+const id = 1;
 
 export const Card: React.FC<Props> = () => {
   return (
@@ -38,7 +39,9 @@ export default function Products({ pagination }) {
     <>
       <div className="flex flex-col items-center justify-center">
         <div className="grid grid-rows-1 sm:w-full sm:grid-rows-2 md:grid-cols-2 lg:min-h-[120vh] lg:w-[80%] lg:grid-cols-4">
-          <Card />
+          <Link to={`/singleitem/${id}`}>
+            <Card />
+          </Link>
           <Card />
           <Card />
           <Card />
@@ -49,7 +52,7 @@ export default function Products({ pagination }) {
         </div>
 
         {pagination ? (
-          <div className="mb-4" >
+          <div className="mb-4">
             <Pagination />
           </div>
         ) : (

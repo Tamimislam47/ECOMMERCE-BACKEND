@@ -55,7 +55,7 @@ const UlList: React.FC<ListType> = ({ path, name, subLinks }) => {
 
 export default function Navbar() {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center pl-4 pr-4">
       <div className="navbar w-full bg-transparent lg:w-[80%]">
         <div className="navbar-start">
           <div className="dropdown">
@@ -91,13 +91,14 @@ export default function Navbar() {
           />
 
           <div className="hidden items-center lg:flex">
-            <ul className="menu-horizontal gap-5 text-[17px]">
-              {navigationLinks.map((link) => (
-                <React.Fragment key={link.path}>
+            <ul  className="menu-horizontal gap-5 text-[17px]">
+              {navigationLinks.map((link, key) => (
+                <React.Fragment>
                   <UlList
                     name={link.name}
                     path={link.path}
                     subLinks={link.subLinks}
+                    key={key}
                   />
                 </React.Fragment>
               ))}
@@ -145,48 +146,3 @@ export default function Navbar() {
     </div>
   );
 }
-
-// <ul className="menu menu-horizontal flex items-center px-1 text-[17px]">
-//   <li>
-//     <Link to={"/"}>Home</Link>
-//   </li>
-//   <li>
-//     <Link to={"/shop"}>Shop</Link>
-//   </li>
-//   <li>
-//     <Link to={"/products"}>Products</Link>
-//   </li>
-//   <li>
-//     <Link to={"/blog"}>Blog</Link>
-//   </li>
-//   <li>
-//     <div className="dropdown dropdown-bottom">
-//       <div tabIndex={0} role="button" className="border-0 bg-transparent">
-//         Pages
-//       </div>
-//       <ul
-//         tabIndex={0}
-//         className="menu dropdown-content z-[1] rounded-box bg-white shadow"
-//       >
-//         <li>
-//           <Link to={"/aboutus"}>About Us</Link>
-//         </li>
-//         <li>
-//           <Link to={"/storelist"}>Store List </Link>
-//         </li>
-//         <li>
-//           <Link to={"/contactus"}>Contact Us </Link>
-//         </li>
-//         <li>
-//           <Link to={"/faqs"}>FAQs </Link>
-//         </li>
-//         <li>
-//           <Link to={"/feedbacks"}>Customer Feedbacks </Link>
-//         </li>
-//       </ul>
-//     </div>
-//   </li>
-//   <li>
-//     <Link to={"/buytheme"}>Buy Theme</Link>
-//   </li>
-// </ul>;
